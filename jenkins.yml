@@ -1,0 +1,21 @@
+- name: Set up jenkins
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose
+  tasks:
+    - import_role:
+        name: ubuntu.update
+        tasks_from: main
+    - import_role:
+        name: geerlingguy.pip
+        tasks_from: main
+    - import_role:
+        name: geerlingguy.docker
+        tasks_from: main
+    - import_role:
+        name: jenkins.docker
+        tasks_from: main

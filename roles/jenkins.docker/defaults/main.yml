@@ -1,0 +1,6 @@
+jenkins_docker_compose_target_dir: '/www/jenkins'
+jenkins_docker_home_dir: '/jenkins-docker'
+jenkins_docker_socket_dir: '/var/run/docker.sock'
+jenkins_docker_port: '8765'
+jenkins_docker_user: 'jenkins_user'
+jenkins_docker_user_password: 'jenkins_user_password'

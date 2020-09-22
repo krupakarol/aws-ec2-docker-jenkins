@@ -1,2 +1,10 @@
 venv/
 tmp/
+.env
+roles/geerlingguy.java/
+roles/geerlingguy.docker/
+roles/geerlingguy.pip/
+variables.tf
+.terraform/
+*.tfstate*
+
