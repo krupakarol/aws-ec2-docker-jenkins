@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  jenkins:
+    build: . 
+    env_file:
+      - {{jenkins_docker_compose_target_dir}}/.env
+    environment:
+      - JENKINS_USER="${JENKINS_USER}"
+      - JENKINS_PASS="${JENKINS_PASS}"
+    ports:
+      - {{jenkins_docker_port}}:8080
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - {{jenkins_docker_socket_dir}}:/var/run/docker.sock
+    networks:
+      - docker-jenkins
+     
+volumes:
+    jenkins_data:
+      driver: local
+      driver_opts:
+        type: "none"
+        o: "bind"
+        device: "{{jenkins_docker_home_dir}}"
+
+networks: 
+    docker-jenkins:
+        driver: bridge

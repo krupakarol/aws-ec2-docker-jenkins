@@ -1,0 +1,54 @@
+---
+- name: Create target directory
+  file:
+    path: '{{jenkins_docker_compose_target_dir}}'
+    state: directory
+
+- name: Create jenkins volume directory
+  file:
+    path: '{{jenkins_docker_home_dir}}'
+    state: directory
+    
+- name: Copy env file
+  copy:
+   src: '{{item}}'
+   dest: '{{jenkins_docker_compose_target_dir}}'
+   mode: '755'
+  loop:
+    - .env
+
+- name: Copy jenkins-plugins list
+  copy:
+   src: '{{item}}'
+   dest: '{{jenkins_docker_compose_target_dir}}'
+   mode: '755'
+  loop:
+    - jenkins-plugins
+
+- name: Copy default.user.groovy script
+  copy:
+   src: '{{item}}'
+   dest: '{{jenkins_docker_compose_target_dir}}'
+   mode: '755'
+  loop:
+    - default-user.groovy
+
+- name: Copy Dockerfile
+  template:
+    src: '{{item}}'
+    dest: '{{jenkins_docker_compose_target_dir}}/Dockerfile'
+    mode: '755'
+  loop:
+    - Dockerfile.j2
+
+- name: Copy docker-compose
+  template:
+    src: '{{item}}'
+    dest: '{{jenkins_docker_compose_target_dir}}/docker-compose.yml'
+    mode: '755'
+  loop:
+    - docker-compose.yml.j2
+
+- name: Run docker-compose up
+  docker_compose:
+    project_src: '{{jenkins_docker_compose_target_dir}}/'
